@@ -1,9 +1,11 @@
-#include "stdio.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main() {
     int size = 1;
     int input = 16;
-    float values[10];   
+    float values[10];
+    float *arr;   
     do{ 
         printf("Input Array Size: ");
         scanf("%d", &size);
@@ -14,7 +16,8 @@ int main() {
 
     printf("Your array can hold %d elements\n", size);
 
-    float arr[size]; //error for no reason 
+    //allow for big array size
+    arr = (float*)malloc(size * sizeof(float));
 
     //populate array with 0
     for(int i = 0; i < size; i++){
@@ -29,13 +32,14 @@ int main() {
     for(int i = 0; i < input; i++){
         printf("Input %d: ", i+1);
         scanf("%f", &arr[i]);
+        //TODO: VALIDATE INPUT
     }
 
     
     printf("\n");
     int index = 0;
     //computation
-    for(int i = 3; i < size-3; i++){
+    for(int i = 3; i < input-3; i++){
         values[index] = arr[i-3] + arr[i-2] + arr[i-1] + arr[i] + arr[i+1] + arr[i+2] + arr[i+3];
         index++;
     }
