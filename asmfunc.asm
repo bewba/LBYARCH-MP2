@@ -17,7 +17,9 @@ section .text
 		sub rdx, 3 ;end the loop
 		start:
 		cmp r11, rdx ;checks if it done
-		je end 
+		je end
+		cmp r11, rdx ;checks if it done
+		jg end 
 		mov r12, r11 ; copy curr index
 		mov r13, r11 ; copy curr index
 		sub r12, 3 ; start of 2nd loop
