@@ -1,52 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
+#include <time.h>
 
 int main() {
-    int size = 1;
-    int input = 16;
-    float values[10];
-    float *arr;   
-    do{ 
-        printf("Input Array Size: ");
-        scanf("%d", &size);
-        if (size < 4 || size > 1073741824){
-            printf("Invalid Size\n"); 
-        }
-    } while (size < 7 || size > 1073741824);
+	int size, i,j, ctr;
+	float values[10], val;
+	float* arr;
+	clock_t begin, end;
+	printf("Enter a size:\n");
+	scanf_s("%d", &size);
 
-    printf("Your array can hold %d elements\n", size);
+	arr = (float*)malloc(size * sizeof(float));
+	ctr = 0;
+	for (i = 0; i < size; i++) {
+		arr[i] = 1;
+	}
 
-    //allow for big array size
-    arr = (float*)malloc(size * sizeof(float));
+	for (i = 0; i < 10; i++) {
+		values[i] = 0;
+	}
 
-    //populate array with 0
-    for(int i = 0; i < size; i++){
-        arr[i] = 0;
-    }
+	begin = clock();
+	for (i = 3; i < size; i++) {
+		val = 0;
+		for (j = i - 3; j < i + 4; j++) {
+			val += arr[j];
+		}
 
-    //take in first 16 digits since thats what matters
-    if (size < 16){
-        input = size;
-    }
+		if (ctr < 10) {
+			values[ctr] = val;
+		}
+		ctr += 1;
+	}
+	end = clock();
+	for (i = 0; i < 10; i++) {
+		printf("%f\n", values[i]);
+	}
 
-    for(int i = 0; i < input; i++){
-        printf("Input %d: ", i+1);
-        scanf("%f", &arr[i]);
-        //TODO: VALIDATE INPUT
-    }
-
-    
-    printf("\n");
-    int index = 0;
-    //computation
-    for(int i = 3; i < input-3; i++){
-        values[index] = arr[i-3] + arr[i-2] + arr[i-1] + arr[i] + arr[i+1] + arr[i+2] + arr[i+3];
-        index++;
-    }
-
-    //output
-    for(int i =0; i < index; i++){
-        printf("%.2f\n", values[i]);
-    }
-    
+	double time_taken = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("Time take: %f seconds", time_taken);
+	end = clock();
 }
+
+	
